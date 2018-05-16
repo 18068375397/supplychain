@@ -1,3 +1,3 @@
 # supplychain
 ## 简介
-基于学习 Spring Boot API Project Seed 的项目
+一个基于Spring Boot & MyBatis的种子ERP项目
