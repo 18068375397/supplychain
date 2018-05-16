@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkSailWarehouseOrderMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkSailWarehouseOrder">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="SAIL_WAREHOUSE_CODE" jdbcType="NVARCHAR" property="sailWarehouseCode"/>
+        <result column="SAIL_CODE" jdbcType="NVARCHAR" property="sailCode"/>
+        <result column="SUPPLIE_ID" jdbcType="NVARCHAR" property="supplieId"/>
+        <result column="TOTAL_MONEY" jdbcType="DECIMAL" property="totalMoney"/>
+        <result column="SAIL_NUM" jdbcType="INTEGER" property="sailNum"/>
+        <result column="PLAN_CHARGE" jdbcType="DECIMAL" property="planCharge"/>
+        <result column="BILL_STATUS" jdbcType="NVARCHAR" property="billStatus"/>
+        <result column="WAREHOUSING_STATUS" jdbcType="NVARCHAR" property="warehousingStatus"/>
+        <result column="BILL_TIME" jdbcType="TIMESTAMP" property="billTime"/>
+        <result column="AGENT" jdbcType="NVARCHAR" property="agent"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+    </resultMap>
+    <sql id="BASE_COLUMN_LIST">
+ID, SAIL_WAREHOUSE_CODE, SAIL_CODE, SUPPLIE_ID, TOTAL_MONEY, SAIL_NUM, PLAN_CHARGE, BILL_STATUS, WAREHOUSING_STATUS, BILL_TIME, AGENT, STATUS, OPERATOR, CREATE_TIME, LAST_OPERATOR, LAST_OPERATOR_TIME
+</sql>
+    <sql id="query">
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id}
+            </if>
+        </where>
+    </sql>
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_SAIL_WAREHOUSE_ORDER
+        <include refid="query"/>
+    </select>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkAttributeValueMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkAttributeValue">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="VALUE_ID" jdbcType="NVARCHAR" property="valueId"/>
+        <result column="ATTR_ID" jdbcType="NVARCHAR" property="attrId"/>
+        <result column="VALUE_NAME" jdbcType="NVARCHAR" property="valueName"/>
+        <result column="SORT" jdbcType="INTEGER" property="sort"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+          ID, VALUE_ID, ATTR_ID, VALUE_NAME, STATUS, SORT, OPERATOR, CREATE_TIME, LAST_OPERATOR, LAST_OPERATOR_TIME
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="attrId != null and attrId != '' ">
+                AND ATTR_ID = #{attrId}
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_ATTRIBUTE_VALUE
+        <include refid="query"/>
+    </select>
+
+
+</mapper>

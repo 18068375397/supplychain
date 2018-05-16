@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: dev
+
+# 设置freemarker
+  freemarker:
+    allow-request-override: false
+#   开发过程建议关闭缓存
+    cache: false
+    check-template-location: false
+    charset: UTF-8
+    content-type: text/html; charset=utf-8
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+
+## 设置thymeleaf
+#  thymeleaf:
+#    prefix: classpath:/templates/
+#    suffix: .html
+#    mode: HTML5
+#    encoding: UTF-8
+#    content-type: text/html; charset=utf-8
+##   设置缓存为false 为了热部署 host refresh
+#    cache: false

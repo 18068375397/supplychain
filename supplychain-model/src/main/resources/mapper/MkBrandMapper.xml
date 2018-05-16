@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkBrandMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkBrand">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="BRAND_ID" jdbcType="BIGINT" property="brandId"/>
+        <result column="BRAND_NAME" jdbcType="NVARCHAR" property="brandName"/>
+        <result column="TOP_ID" jdbcType="BIGINT" property="topId"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="parentId"/>
+        <result column="CATEGORY_ID" jdbcType="BIGINT" property="categoryId"/>
+        <result column="LOGO" jdbcType="NVARCHAR" property="logo"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+    </resultMap>
+    <sql id="BASE_COLUMN_LIST">
+ID, BRAND_ID, BRAND_NAME, TOP_ID, PARENT_ID, CATEGORY_ID, LOGO, STATUS, OPERATOR, CREATE_TIME, LAST_OPERATOR, LAST_OPERATOR_TIME
+</sql>
+    <sql id="query">
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id}
+            </if>
+            <if test="status != null and status != '' ">
+                AND STATUS = #{status}
+            </if>
+        </where>
+    </sql>
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_BRAND
+        <include refid="query"/>
+    </select>
+
+    <select id="findBrandList" parameterType="map" resultType="map">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_BRAND p
+        <include refid="query"/>
+        <!--WHERE PRODUCT_NAME=#{sortColumn}-->
+        ORDER BY p.${sortColumn} ${sortOrder}
+    </select>
+</mapper>

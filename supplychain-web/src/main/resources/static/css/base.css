@@ -1,0 +1,137 @@
+@charset "utf-8";
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+img {
+    border: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.lvdo-container {
+/ / padding: 0 0 0 20 px / /
+}
+
+i,
+em {
+    font-style: normal;
+}
+
+body {
+    /*   background-color: #fff; */
+    font-size: 14px;
+    font-family: "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", SimHei, "\5B8B\4F53", simsun, sans-serif;
+    color: #666666;
+}
+
+.fx {
+    clear: both;
+}
+
+hr {
+    color: #ccc;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+    background-color: #fff !important;
+}
+
+input, select, textarea {
+    outline: none;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    max-width: 300px;
+}
+
+textarea {
+    resize: none;
+}
+
+pre {
+    font-size: 14px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    /*white-space: -pre-wrap; !* Opera 4-6 *!*/
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+    word-break: break-all;
+    overflow: hidden;
+
+}
+
+#index-mainbox #left > div > img {
+    width: 121px;
+    height: 82px;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+span.help-inline {
+    display: block;
+    color: red;
+    line-height: 29px;
+}
+
+.fileupload {
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    width: 0px;
+    font-size: 50rem;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.upload-img {
+    height: 100px;
+    width: 100px;
+}
+
+.delete-icon {
+    background: url(../images/closeimg.png) center center no-repeat;
+    display: inline-block;
+    left: -28px;
+    position: relative;
+    top: -29px;
+    height: 24px;
+    width: 24px;
+}

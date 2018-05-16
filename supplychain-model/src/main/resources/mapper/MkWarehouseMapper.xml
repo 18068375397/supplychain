@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkWarehouseMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkWarehouse">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="WAREHOUSE_ID" jdbcType="NVARCHAR" property="warehouseId"/>
+        <result column="WAREHOUSE_NAME" jdbcType="NVARCHAR" property="warehouseName"/>
+        <result column="WAREHOUSE_ADDRESS" jdbcType="NVARCHAR" property="warehouseAddress"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+    </resultMap>
+    <sql id="BASE_COLUMN_LIST">
+ID, WAREHOUSE_ID, WAREHOUSE_NAME, WAREHOUSE_ADDRESS, STATUS, OPERATOR, CREATE_TIME, LAST_OPERATOR, LAST_OPERATOR_TIME
+</sql>
+    <sql id="query">
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id}
+            </if>
+        </where>
+    </sql>
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_WAREHOUSE
+        <include refid="query"/>
+    </select>
+
+    <select id="findWarehouseList" parameterType="map" resultType="map">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_WAREHOUSE p
+        <include refid="query"/>
+        <!--WHERE PRODUCT_NAME=#{sortColumn}-->
+        ORDER BY p.${sortColumn} ${sortOrder}
+    </select>
+</mapper>

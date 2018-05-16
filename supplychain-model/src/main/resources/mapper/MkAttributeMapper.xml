@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkAttributeMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkAttribute">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="ATTR_ID" jdbcType="NVARCHAR" property="attrId"/>
+        <result column="ATTR_NAME" jdbcType="NVARCHAR" property="attrName"/>
+        <result column="CATEGORY_ID" jdbcType="BIGINT" property="categoryId"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="parentId"/>
+        <result column="TOP_ID" jdbcType="BIGINT" property="topId"/>
+        <result column="ATTR_TYPE" jdbcType="NVARCHAR" property="attrType"/>
+        <result column="IS_REQUIRED" jdbcType="NVARCHAR" property="isRequired"/>
+        <result column="IS_SEARCH" jdbcType="NVARCHAR" property="isSearch"/>
+        <result column="INPUT_TYPE" jdbcType="NVARCHAR" property="inputType"/>
+        <result column="COLUMN_TYPE" jdbcType="NVARCHAR" property="columnType"/>
+        <result column="ATTR_VALUES" jdbcType="NVARCHAR" property="attrValues"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="SORT" jdbcType="INTEGER" property="sort"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+          ID, ATTR_ID, ATTR_NAME, CATEGORY_ID, PARENT_ID, TOP_ID, ATTR_TYPE, IS_REQUIRED,
+          IS_SEARCH, INPUT_TYPE, COLUMN_TYPE,ATTR_VALUES, STATUS, SORT, OPERATOR, CREATE_TIME, LAST_OPERATOR, LAST_OPERATOR_TIME
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="status != null and status != '' ">
+                AND STATUS = #{status}
+            </if>
+            <if test="topId != null and topId != '' ">
+                AND TOP_ID = #{topId}
+            </if>
+            <if test="parentId != null and parentId != '' ">
+                AND PARENT_ID = #{parentId}
+            </if>
+            <if test="categoryId != null and categoryId != '' ">
+                AND CATEGORY_ID = #{categoryId}
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_ATTRIBUTE
+        <include refid="query"/>
+    </select>
+
+    <select id="findAttList" parameterType="map" resultType="map">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_ATTRIBUTE p
+        <include refid="query"/>
+        <!--WHERE PRODUCT_NAME=#{sortColumn}-->
+        ORDER BY p.${sortColumn} ${sortOrder}
+    </select>
+
+</mapper>

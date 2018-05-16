@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkSkuAttributeMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkSkuAttribute">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="SKU_ATTR_ID" jdbcType="NVARCHAR" property="skuAttrId"/>
+        <result column="SKU_ATTR_NAME" jdbcType="NVARCHAR" property="skuAttrName"/>
+        <result column="CATEGORY_ID" jdbcType="BIGINT" property="categoryId"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="parentId"/>
+        <result column="TOP_ID" jdbcType="BIGINT" property="topId"/>
+        <result column="COLUMN_TYPE" jdbcType="NVARCHAR" property="columnType"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="SORT" jdbcType="INTEGER" property="sort"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        ID, SKU_ATTR_ID, SKU_ATTR_NAME, CATEGORY_ID, PARENT_ID, TOP_ID, COLUMN_TYPE, STATUS, SORT, OPERATOR, CREATE_TIME, LAST_OPERATOR, LAST_OPERATOR_TIME
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id}
+            </if>
+            <if test="status != null and status != '' ">
+                AND STATUS = #{status}
+            </if>
+            <if test="topId != null and topId != '' ">
+                AND TOP_ID = #{topId}
+            </if>
+            <if test="parentId != null and parentId != '' ">
+                AND PARENT_ID = #{parentId}
+            </if>
+            <if test="categoryId != null and categoryId != '' ">
+                AND CATEGORY_ID = #{categoryId}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_SKU_ATTRIBUTE
+        <include refid="query"/>
+    </select>
+
+    <select id="findSkuList" parameterType="map" resultType="map">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_SKU_ATTRIBUTE p
+        <include refid="query"/>
+        <!--WHERE PRODUCT_NAME=#{sortColumn}-->
+        ORDER BY p.${sortColumn} ${sortOrder}
+    </select>
+</mapper>

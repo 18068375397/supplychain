@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkProductMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkProduct">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="PRODUCT_ID" jdbcType="NVARCHAR" property="productId"/>
+        <result column="PRODUCT_NAME" jdbcType="NVARCHAR" property="productName"/>
+        <result column="BRAND_ID" jdbcType="BIGINT" property="brandId"/>
+        <result column="MERCHANT_CODE" jdbcType="NVARCHAR" property="merchantCode"/>
+        <result column="CATEGORY_ID" jdbcType="BIGINT" property="categoryId"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="parentId"/>
+        <result column="TOP_ID" jdbcType="BIGINT" property="topId"/>
+        <result column="UNIT" jdbcType="NVARCHAR" property="unit"/>
+        <result column="IS_WEIGHT" jdbcType="NVARCHAR" property="isWeight"/>
+        <result column="WEIGHT" jdbcType="DECIMAL" property="weight"/>
+        <result column="WEIGHT_UNIT" jdbcType="NVARCHAR" property="weightUnit"/>
+        <result column="SPECIFICATION" jdbcType="NVARCHAR" property="specification"/>
+        <result column="SUPPLIER_ID" jdbcType="BIGINT" property="supplierId"/>
+        <result column="REMARK" jdbcType="NVARCHAR" property="remark"/>
+        <result column="INTRODUCTION" jdbcType="NVARCHAR" property="introduction"/>
+        <result column="ATTR_DESC" jdbcType="NVARCHAR" property="attrDesc"/>
+        <result column="SEARCH_DESC" jdbcType="NVARCHAR" property="searchDesc"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+      ID, PRODUCT_ID, PRODUCT_NAME, BRAND_ID, MERCHANT_CODE, CATEGORY_ID, PARENT_ID, TOP_ID, UNIT, IS_WEIGHT, WEIGHT, WEIGHT_UNIT, SPECIFICATION, SUPPLIER_ID, REMARK, INTRODUCTION, ATTR_DESC, SEARCH_DESC, STATUS, OPERATOR, CREATE_TIME, LAST_OPERATOR, LAST_OPERATOR_TIME
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id}
+            </if>
+            <if test="brandId != null and brandId != '' ">
+                AND BRAND_ID = #{brandId}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_PRODUCT
+        <include refid="query"/>
+    </select>
+
+    <select id="findProductList" parameterType="map" resultType="map">
+        SELECT
+        p.ID,p.PRODUCT_ID,P.PRODUCT_NAME,b.BRAND_NAME,c.CATEGORY_NAME,p.LAST_OPERATOR_TIME
+        FROM
+        MK_PRODUCT p
+        LEFT JOIN MK_BRAND b on p.BRAND_ID=b.BRAND_ID
+        LEFT JOIN MK_PRODUCT_CATEGORY c on p.CATEGORY_ID=c.CATEGORY_ID
+        <!--WHERE PRODUCT_NAME=#{sortColumn}-->
+        ORDER BY p.${sortColumn} ${sortOrder}
+    </select>
+
+
+</mapper>

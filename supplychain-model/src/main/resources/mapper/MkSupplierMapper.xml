@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkSupplierMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkSupplier">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="SUPPLIER_ID" jdbcType="NVARCHAR" property="supplierId"/>
+        <result column="SUPPLIER_NAME" jdbcType="NVARCHAR" property="supplierName"/>
+        <result column="MEMBER_ID" jdbcType="NVARCHAR" property="memberId"/>
+        <result column="BUSINESS_NATURE" jdbcType="NVARCHAR" property="businessNature"/>
+        <result column="LOGO" jdbcType="NVARCHAR" property="logo"/>
+        <result column="INTRODUCTION" jdbcType="NVARCHAR" property="introduction"/>
+        <result column="SCOPES" jdbcType="NVARCHAR" property="scopes"/>
+        <result column="BUSINESS_LICENSE" jdbcType="NVARCHAR" property="businessLicense"/>
+        <result column="PAYMENT_TYPE" jdbcType="NVARCHAR" property="paymentType"/>
+        <result column="DEPOSIT_MONEY" jdbcType="DECIMAL" property="depositMoney"/>
+        <result column="SERVICE_MONEY" jdbcType="DECIMAL" property="serviceMoney"/>
+        <result column="OPEN_TYPE" jdbcType="NVARCHAR" property="openType"/>
+        <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="OPEN_TIME" jdbcType="TIMESTAMP" property="openTime"/>
+        <result column="OPEN_OPERATOR" jdbcType="NVARCHAR" property="openOperator"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+    </resultMap>
+    <sql id="BASE_COLUMN_LIST">
+ID, SUPPLIER_ID, SUPPLIER_NAME, MEMBER_ID, BUSINESS_NATURE, LOGO, INTRODUCTION, SCOPES, BUSINESS_LICENSE, PAYMENT_TYPE, DEPOSIT_MONEY, SERVICE_MONEY, OPEN_TYPE, START_TIME, END_TIME, STATUS, OPEN_TIME, OPEN_OPERATOR, OPERATOR, CREATE_TIME, LAST_OPERATOR, LAST_OPERATOR_TIME
+</sql>
+    <sql id="query">
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id}
+            </if>
+        </where>
+    </sql>
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_SUPPLIER
+        <include refid="query"/>
+    </select>
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkProductSkuMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkProductSku">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="SKU_ID" jdbcType="NVARCHAR" property="skuId"/>
+        <result column="CODE" jdbcType="NVARCHAR" property="code"/>
+        <result column="SKU_CODE" jdbcType="NVARCHAR" property="skuCode"/>
+        <result column="PRODUCT_ID" jdbcType="NVARCHAR" property="productId"/>
+        <result column="QUANTITY" jdbcType="INTEGER" property="quantity"/>
+        <result column="BUY_PRICE" jdbcType="DECIMAL" property="buyPrice"/>
+        <result column="SALE_PRICE" jdbcType="DECIMAL" property="salePrice"/>
+        <result column="PRICE_UNIT" jdbcType="BIGINT" property="priceUnit"/>
+        <result column="REMARK" jdbcType="NVARCHAR" property="remark"/>
+        <result column="SKU_DESC" jdbcType="NVARCHAR" property="skuDesc"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+    </resultMap>
+
+
+    <sql id="BASE_COLUMN_LIST">
+      ID, SKU_ID, CODE, SKU_CODE, PRODUCT_ID, QUANTITY, BUY_PRICE, SALE_PRICE, PRICE_UNIT, REMARK, SKU_DESC, STATUS, OPERATOR, CREATE_TIME, LAST_OPERATOR, LAST_OPERATOR_TIME
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_PRODUCT_SKU
+        <include refid="query"/>
+    </select>
+
+    <!--按品牌,类目 查询商品SKU列表(采购挑选)-->
+    <select id="getProductSkuList" parameterType="map" resultType="map">
+        SELECT
+        p.PRODUCT_ID,p.PRODUCT_NAME,b.BRAND_NAME,pc.CATEGORY_NAME,p.IS_WEIGHT,
+        r.SKU_VALUE
+        FROM
+        MK_PRODUCT_SKU ps
+        LEFT JOIN MK_PRODUCT p ON ps.PRODUCT_ID = p.PRODUCT_ID
+        LEFT JOIN MK_BRAND b ON p.BRAND_ID = b.BRAND_ID
+        LEFT JOIN MK_PRODUCT_CATEGORY pc ON p.CATEGORY_ID = pc.CATEGORY_ID
+        LEFT JOIN (
+        SELECT
+        SKU_ID,
+        SKU_VALUE = (STUFF((
+        SELECT
+        '-' + SKU_VALUE
+        FROM
+        MK_SKU_ATTR_RELATION
+        WHERE
+        SKU_ID = r.SKU_ID FOR XML PATH ('')),1,1,''))
+        FROM MK_SKU_ATTR_RELATION AS r GROUP BY SKU_ID)
+        r ON ps.SKU_ID = r.SKU_ID
+        <where>
+            <if test="brandId != null and brandId != '' ">
+                AND b.BRAND_ID = #{brandId}
+            </if>
+            <if test="categoryId != null and categoryId != '' ">
+                AND p.CATEGORY_ID = #{categoryId}
+            </if>
+            <if test="parentId != null and parentId != '' ">
+                AND p.PARENT_ID = #{parentId}
+            </if>
+            <if test="topId != null and topId != '' ">
+                AND p.TOP_ID = #{topId}
+            </if>
+        </where>
+        ORDER BY PRODUCT_ID,PRODUCT_NAME,BRAND_NAME
+    </select>
+
+</mapper>

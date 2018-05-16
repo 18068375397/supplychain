@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkProductAttrRelationMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkProductAttrRelation">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="PRODUCT_ID" jdbcType="NVARCHAR" property="productId"/>
+        <result column="ATTR_ID" jdbcType="NVARCHAR" property="attrId"/>
+        <result column="VALUE_ID" jdbcType="NVARCHAR" property="valueId"/>
+        <result column="ATTR_VALUE" jdbcType="NVARCHAR" property="attrValue"/>
+    </resultMap>
+    <sql id="BASE_COLUMN_LIST">
+ID, PRODUCT_ID, ATTR_ID, VALUE_ID, ATTR_VALUE
+</sql>
+    <sql id="query">
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id}
+            </if>
+        </where>
+    </sql>
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_PRODUCT_ATTR_RELATION
+        <include refid="query"/>
+    </select>
+
+</mapper>

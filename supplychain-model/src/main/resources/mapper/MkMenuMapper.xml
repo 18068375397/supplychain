@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkMenuMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkMenu">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="MENU_ID" jdbcType="BIGINT" property="menuId"/>
+        <result column="MENU_NAME" jdbcType="NVARCHAR" property="menuName"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="parentId"/>
+        <result column="MENU_URL" jdbcType="NVARCHAR" property="menuUrl"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        ID, MENU_ID, MENU_NAME, PARENT_ID, MENU_URL, STATUS, OPERATOR, CREATE_TIME, LAST_OPERATOR, LAST_OPERATOR_TIME
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_MENU
+        <include refid="query"/>
+    </select>
+
+    <!--按父节点查询类目-->
+    <select id="getMenuByParentId" resultMap="BaseResultMap" parameterType="long">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM
+        MK_MENU
+        WHERE
+        PARENT_ID=#{parentId}
+    </select>
+
+
+</mapper>

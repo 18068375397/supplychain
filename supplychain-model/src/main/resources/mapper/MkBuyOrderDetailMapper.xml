@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkBuyOrderDetailMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkBuyOrderDetail">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="BUY_CODE" jdbcType="NVARCHAR" property="buyCode"/>
+        <result column="PRODUCT_ID" jdbcType="NVARCHAR" property="productId"/>
+        <result column="SKU_ID" jdbcType="NVARCHAR" property="skuId"/>
+        <result column="WEIGHT" jdbcType="NVARCHAR" property="weight"/>
+        <result column="SAIL_NUM" jdbcType="INTEGER" property="sailNum"/>
+        <result column="UNIT_PRICE" jdbcType="DECIMAL" property="unitPrice"/>
+        <result column="TAX_RATIO" jdbcType="INTEGER" property="taxRatio"/>
+        <result column="TAX" jdbcType="DECIMAL" property="tax"/>
+        <result column="COMPLETED_NUM" jdbcType="INTEGER" property="completedNum"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+    </resultMap>
+    <sql id="BASE_COLUMN_LIST">
+ID, BUY_CODE, PRODUCT_ID, SKU_ID, WEIGHT, SAIL_NUM, UNIT_PRICE, TAX_RATIO, TAX, COMPLETED_NUM, STATUS, LAST_OPERATOR_TIME, OPERATOR, CREATE_TIME, LAST_OPERATOR
+</sql>
+    <sql id="query">
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id}
+            </if>
+        </where>
+    </sql>
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_BUY_ORDER_DETAIL
+        <include refid="query"/>
+    </select>
+
+
+</mapper>

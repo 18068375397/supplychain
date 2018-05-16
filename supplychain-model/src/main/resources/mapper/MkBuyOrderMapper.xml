@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinyonghang.supplychain.dao.MkBuyOrderMapper">
+    <resultMap id="BaseResultMap" type="com.xinyonghang.supplychain.model.MkBuyOrder">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="BUY_CODE" jdbcType="NVARCHAR" property="buyCode"/>
+        <result column="SUPPLIE_ID" jdbcType="NVARCHAR" property="supplieId"/>
+        <result column="TOTAL_MONEY" jdbcType="DECIMAL" property="totalMoney"/>
+        <result column="SAIL_NUM" jdbcType="INTEGER" property="sailNum"/>
+        <result column="PLAN_CHARGE" jdbcType="DECIMAL" property="planCharge"/>
+        <result column="BILL_STATUS" jdbcType="NVARCHAR" property="billStatus"/>
+        <result column="WAREHOUSING_STATUS" jdbcType="NVARCHAR" property="warehousingStatus"/>
+        <result column="BILL_TIME" jdbcType="TIMESTAMP" property="billTime"/>
+        <result column="AGENT" jdbcType="NVARCHAR" property="agent"/>
+        <result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+        <result column="OPERATOR" jdbcType="NVARCHAR" property="operator"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="LAST_OPERATOR" jdbcType="NVARCHAR" property="lastOperator"/>
+        <result column="LAST_OPERATOR_TIME" jdbcType="TIMESTAMP" property="lastOperatorTime"/>
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        ID, BUY_CODE, SUPPLIE_ID, TOTAL_MONEY, SAIL_NUM, PLAN_CHARGE, BILL_STATUS, WAREHOUSING_STATUS, BILL_TIME, AGENT, STATUS, OPERATOR, CREATE_TIME, LAST_OPERATOR, LAST_OPERATOR_TIME
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id != null and id != '' ">
+                AND ID = #{id}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM MK_BUY_ORDER
+        <include refid="query"/>
+    </select>
+
+    <!-- 分页查询 (期货)采购列表-->
+    <select id="findBuyOrderList" parameterType="map" resultType="map">
+        SELECT
+        o.BUY_CODE,s.SUPPLIER_NAME,o.TOTAL_MONEY,o.SAIL_NUM,o.PLAN_CHARGE,
+        o.BILL_STATUS,o.WAREHOUSING_STATUS,o.BILL_TIME
+        FROM
+        MK_BUY_ORDER o LEFT JOIN MK_SUPPLIER s on o.SUPPLIE_ID=s.SUPPLIER_ID
+        <!--WHERE PRODUCT_NAME=#{sortColumn}-->
+        ORDER BY o.${sortColumn} ${sortOrder}
+    </select>
+
+
+</mapper>
